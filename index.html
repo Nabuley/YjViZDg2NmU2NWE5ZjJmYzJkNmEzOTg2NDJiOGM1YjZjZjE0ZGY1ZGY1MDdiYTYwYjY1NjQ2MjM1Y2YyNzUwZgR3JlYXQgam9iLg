@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARG game Last Level</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #02005e;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1, h2, h3, p {
+            color: #ffffff;
+        }
+
+        del {
+            color: red;
+        }
+
+        a, button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .alert-message {
+            color: red;
+        }
+
+        .success-message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>이제 뭐할지 다 알죠?</h1>
+        <del>이건 GPT 사용 가능</del>
+        <p id="hintMessage">근데 이 레벨이 가장 쉬움</p>
+        <br>
+        <br>
+        <input type="text" id="answerInput" placeholder="정답 입력">
+        <button onclick="checkAnswer()">확인</button>
+        <p id="resultMessage" class="message"></p>
+    </div>
+    <script>
+        class console{
+            log(){
+                //무력화
+            }
+        }
+        function checkAnswer() {
+            let userInput = document.getElementById("answerInput").value;
+            let resultMessage = document.getElementById("resultMessage");
+            const flag = Math.random() * 10000000000000000000000000;
+            const cookies = document.cookie.split("; ").map(cookie => cookie.split("="));
+            const encoder2 = new TextEncoder();
+            try {
+                const accessCookie = cookies.find(cookie => cookie[0] === "access_granted");
+                const hashBuffer2 = crypto.subtle.digest("SHA-256", encoder2.encode(accessCookie));
+                const hashArray2 = Array.from(new Uint8Array(hashBuffer2));
+                const hashHex2 = hashArray2.map(b => b.toString(16).padStart(2, "0")).join("");
+                const encodedValue2 = btoa(hashHex2);
+            } catch {
+                alert("야야 arg-main 가서 힌트 얻기 누르고 새로고침 하고와라")
+            }
+            if (eval(`${flag} === ${userInput}`)) {
+                resultMessage.textContent = "굿";
+                hintMessage.innerHTML = `쥔장에게 이거 보내기 : ${encodedValue2}`;
+                resultMessage.className = "message success-message";
+            } else {
+                resultMessage.textContent = "아닌데?";
+                hintMessage.innerHTML = "땡";
+                resultMessage.className = "message alert-message";
+            }
+        }
+
+    </script>
+</body>
+</html>
