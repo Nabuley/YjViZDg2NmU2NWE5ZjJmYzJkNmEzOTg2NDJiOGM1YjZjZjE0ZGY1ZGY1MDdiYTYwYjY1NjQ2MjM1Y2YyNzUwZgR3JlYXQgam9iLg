@@ -74,8 +74,8 @@
         <p id="resultMessage" class="message"></p>
     </div>
     <script>
-        class console{
-            log(){
+        class console {
+            log() {
                 //무력화
             }
         }
@@ -84,17 +84,21 @@
             let resultMessage = document.getElementById("resultMessage");
             const flag = Math.random() * 10000000000000000000000000;
             const cookies = document.cookie.split("; ").map(cookie => cookie.split("="));
-            const encoder2 = new TextEncoder();
+            let encodedValue2 = "";
+            const accessCookie = cookies.find(cookie => cookie[0] === "access_granted");
             try {
-                const accessCookie = cookies.find(cookie => cookie[0] === "access_granted");
+                const encoder2 = new TextEncoder();
                 const hashBuffer2 = crypto.subtle.digest("SHA-256", encoder2.encode(accessCookie));
                 const hashArray2 = Array.from(new Uint8Array(hashBuffer2));
                 const hashHex2 = hashArray2.map(b => b.toString(16).padStart(2, "0")).join("");
-                const encodedValue2 = btoa(hashHex2);
+                let encodedValue2 = btoa(hashHex2);
             } catch {
-                alert("야야 arg-main 가서 힌트 얻기 누르고 새로고침 하고와라")
+                alert("야야 arg-main 가서 힌트 얻기 누르고 새로고침 하고와라");
             }
             if (eval(`${flag} === ${userInput}`)) {
+                if (! accessCookie) {
+                    alert("야야 arg-main 가서 힌트 얻기 누르고 새로고침 하고와라");
+                }
                 resultMessage.textContent = "굿";
                 hintMessage.innerHTML = `쥔장에게 이거 보내기 : ${encodedValue2}`;
                 resultMessage.className = "message success-message";
