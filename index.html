@@ -74,33 +74,22 @@
         <p id="resultMessage" class="message"></p>
     </div>
     <script>
-        class console {
-            log() {
-                //무력화
-            }
-        }
         function checkAnswer() {
-            var encodedValue2;
-            async function res() {
-                const cookies = document.cookie.split("; ").map(cookie => cookie.split("="));
-                const accessCookie = cookies.find(cookie => cookie[0] === "access_granted");
-                const encoder2 = new TextEncoder();
-                const hashBuffer2 = await crypto.subtle.digest("SHA-256", encoder2.encode(accessCookie));
-                const hashArray2 = Array.from(new Uint8Array(hashBuffer2));
-                const hashHex2 = hashArray2.map(b => b.toString(16).padStart(2, "0")).join("");
-                encodedValue2 = btoa(hashHex2);
-            }
-            res();
+            const cookies = document.cookie.split("; ").map(cookie => cookie.split("="));
+            const accessCookie = cookies.find(cookie => cookie[0] === "access_granted");
+            let k = 0;
             let userInput = document.getElementById("answerInput").value;
             let resultMessage = document.getElementById("resultMessage");
-            const flag = Math.random() * 10000000000000000000000000;
             
-            if (eval(`${flag} === ${userInput}`)) {
+            if (eval(`${Math.random() * 10000000000000000000000000} === ${userInput}`)) {
                 if (! accessCookie) {
                     alert("야야 arg-main 가서 힌트 얻기 누르고 새로고침 하고와라");
                 }
+                for (let i of accessCookie) {
+                    k += i.charCodeAt();
+                }
                 resultMessage.textContent = "굿";
-                hintMessage.innerHTML = `쥔장에게 이거 보내기 : ${encodedValue2}`;
+                hintMessage.innerHTML = `쥔장에게 이거 보내기 : ${k}`;
                 resultMessage.className = "message success-message";
             } else {
                 resultMessage.textContent = "아닌데?";
